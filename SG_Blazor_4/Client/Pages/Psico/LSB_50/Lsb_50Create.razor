@@ -1,0 +1,351 @@
+﻿@page   "/psico/lsb_50create"
+
+@using SG_Blazor_4.Shared.Models.Psico
+@using System.ComponentModel.DataAnnotations
+@using SG_Blazor_4.Client.Shared
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+@inject IJSRuntime iJSRuntime
+
+
+<h3>LSB_50</h3>
+
+<EditForm Model="@lSB_50" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="card col-md-12">
+        <div class="card-body">
+            <div class=" row">
+                <div class="form-group ml-2">
+                    <label>DNI</label>
+                    <InputText class="form-control" @bind-Value="@lSB_50.Dni"></InputText>
+                </div>
+                <div class="form-group ml-2">
+                    <label>Nombre y Apellido</label>
+                    <InputText class="form-control" @bind-Value="@lSB_50.NomApe"></InputText>
+                </div>
+                <div class="form-group ml-2">
+                    <label>Edad</label>
+                    <InputNumber class="form-control" @bind-Value="@lSB_50.Edad"></InputNumber>
+                </div>
+                <div class="form-group ml-2">
+                    <label>Grado de instrucción</label>
+                    <InputText class="form-control" @bind-Value="@lSB_50.GradoInstruccion"></InputText>
+                </div>
+                <div class="form-group ml-2">
+                    <label>Fecha</label>
+                    <InputDate class="form-control" @bind-Value="@lSB_50.Fecha"></InputDate>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="table-responsive-sm">
+        <table class="table table-striped">
+            <!--1-5-->
+            <tr>
+                <td>01</td>
+                <td>Mi corazón palpita o va muy deprisa</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._1"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>02</td>
+                <td>Me siento triste.  </td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._2"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>03</td>
+                <td>Tengo ganas de romper o destruir algo. </td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._3"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>04</td>
+                <td>Siento nerviosismo o agitación interior.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._4"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>05</td>
+                <td>Tengo mareos o sensación de desmayo. </td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._5"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <!--1-5-->
+            <!--6-10-->
+            <tr>
+                <td>06</td>
+                <td>Me preocupa la dejadez y el descuido.  </td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._6"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>07</td>
+                <td>Tengo que comprobar una y otra vez todo lo que hago. </td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._7"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>08</td>
+                <td>Me cuesta tomar decisiones </td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._8"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>09</td>
+                <td>Me irrito o enfado por cualquier cosa. </td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._9"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Siento miedo en la calle o espacios abiertos.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._10"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <!--6-10-->
+            <!--11-15-->
+            <tr>
+                <td>11</td>
+                <td>Tengo dolores de cabeza.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._11"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>Me siento decaído o falta de fuerzas.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._12"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>Me despierto de madrugada.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._13"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>Duermo inquieto o me despierto mucho en la noche.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._14"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>Doy vueltas a palabras o ideas que no consigo quitarme de la cabeza.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._15"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <!--11-15-->
+            <!--16-20-->
+            <tr>
+                <td>16</td>
+                <td>Me siento incomodo o vergonzoso cuando estoy en reuniones con gente.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._16"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td>Me vienen ideas de acabar con mi vida.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._17"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td>Tengo miedo sin motivo.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._18"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td>Tengo molestias digestivas o nauseas.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._19"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td>Siento hormigueo o se me duerme alguna parte del cuerpo.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._20"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <!--16-20-->
+            <!--21-25-->
+            <tr>
+                <td>21</td>
+                <td>Veo mi futuro sin esperanzas.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._21"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td>Me da miedo estar solo.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._22"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>23</td>
+                <td>Tengo ataques de ira que no puedo controlar.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._23"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td>Me siento incomprendido.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._24"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>25</td>
+                <td>Me da miedo salir de casa solo.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._25"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <!--21-25-->
+            <!--26-30-->
+            <tr>
+                <td>26</td>
+                <td>Me parece que otras personas me observan o hablan de mi.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._26"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>27</td>
+                <td>Me cuesta dormirme.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._27"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>28</td>
+                <td>Tengo sentimiento de culpa.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._28"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>29</td>
+                <td>Me siento incomodo comiendo o bebiendo en público.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._29"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>30</td>
+                <td>Me siento herido con facilidad.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._30"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <!--26-30-->
+            <!--31-35-->
+            <tr>
+                <td>31</td>
+                <td>Me siento incapaz de hacer las cosas o terminar las tereas.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._31"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>32</td>
+                <td>No siento interés por nada.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._32"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>33</td>
+                <td>Tengo manías como repetir cosas innecesarias (tocar algo, lavarme, comprobar, etc.)</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._33"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>Me vienen ideas o imágenes que me dan miedo.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._34"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>35</td>
+                <td>Me siento temeroso.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._35"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <!--31-35-->
+            <!--36-40-->
+            <tr>
+                <td>36</td>
+                <td>Tengo que hacer las cosas muy despacio para estar seguro que las hago bien.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._36"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>37</td>
+                <td>Me siento solo.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._37"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>38</td>
+                <td>Me siento inferior a los demás.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._38"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td>Lloro con facilidad.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._39"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>40</td>
+                <td>Me siento solo aunque tenga compañía.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._40"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <!--36-40-->
+            <!--41-45-->
+            <tr>
+                <td>41</td>
+                <td>Me da por gritar y tirar las cosas.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._41"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>42</td>
+                <td>Me siento inútil y poco valioso.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._42"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>43</td>
+                <td>Me duelen los músculos.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._43"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>44</td>
+                <td>Discuto con frecuencia.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._44"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>45</td>
+                <td>Tengo dolores de corazón en el pecho.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._45"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <!--41-45-->
+            <!--46-50-->
+            <tr>
+                <td>46</td>
+                <td>Me dan ahogos o me cuesta respirar.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._46"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>47</td>
+                <td>Tengo que evitar ciertas cosas, lugares o actividades porque me da miedo.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._47"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>48</td>
+                <td>Me dan ganas de golpear o hacer daño a alguien.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._48"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>49</td>
+                <td>Siento que todo requiere un gran esfuerzo.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._49"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <tr>
+                <td>50</td>
+                <td>Tengo presentimientos que va a pasar algo malo.</td>
+                <td><InputSelect class="form-control" @bind-Value="lSB_50._50"><CustomInputSelectValorGrado /></InputSelect></td>
+            </tr>
+            <!--46-50-->
+        </table>
+
+    </div>
+    <button class="btn btn-warning btn-lg" type="submit">Submit</button>
+</EditForm>
+
+
+@code {
+
+    LSB_50Model lSB_50 = new LSB_50Model();
+
+    async Task Guardar()
+    {
+        await httpClient.PostAsJsonAsync("api/lsb_50", lSB_50);
+        navigationManager.NavigateTo("psico/lsb_50index");
+    }
+
+    private async void HandleValidSubmit()
+    {
+
+        await Guardar();
+    }
+
+    async Task testButton()
+    {
+        if (!await iJSRuntime.InvokeAsync<bool>("confirm", $"Una vez guardado, ya no se puede modificar la prueba! DESEA GUARDARLA?"))
+            return;
+
+        await Guardar();
+
+    }
+
+
+}

@@ -1,0 +1,58 @@
+﻿@page "/psico/ba7index"
+
+@using SG_Blazor_4.Shared.Models.Psico
+@inject HttpClient httpClient
+
+<div class="card">
+    <div class=" card-header">
+        <h5>Ba7</h5>
+        <div class="form-row">
+            <input class="form-control col-md-2" type="date" @bind="fechas.FecIni" />
+            <input class="form-control col-md-2" type="date" @bind="fechas.FecFin" />
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive-sm">
+            <table class="table table-striped">
+                <thead>
+                    <tr><th>Dni</th><th>Nombre</th></tr>
+                </thead>
+                <tbody>
+                    <ListadoGenerico Listado="Ba7s">
+
+                        <HayRegistros Context="ba7">
+                            <Ba7Row ba7="ba7"></Ba7Row>
+                        </HayRegistros>
+
+                    </ListadoGenerico>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    @code {
+        List<Ba7Model> Ba7s;
+        Ba7Model Ba7;
+        Fechas fechas = new Fechas();
+
+        private async Task GetDatos()
+        {
+            Ba7s = await httpClient.GetFromJsonAsync<List<Ba7Model>>("api/ba7");
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await GetDatos();
+        }
+
+        public class Fechas
+        {
+            public DateTime FecIni { get; set; }
+            public DateTime FecFin { get; set; }
+
+            public Fechas() { FecIni = DateTime.Now.Date; FecFin = FecIni; }
+        }
+    }
+
+

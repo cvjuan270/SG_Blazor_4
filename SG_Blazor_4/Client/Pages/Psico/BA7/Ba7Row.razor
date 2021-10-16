@@ -1,0 +1,13 @@
+﻿@using SG_Blazor_4.Shared.Models.Psico
+<tr>
+    <td>
+        <a class="btn oi oi-file" href="api/ba7report/@ba7.IdBa7" target="_blank">
+            
+        </a>
+    </td>
+    <td>@ba7.Dni</td>
+    <td>@ba7.NomApe</td>
+</tr>
+@code {
+    [Parameter] public Ba7Model ba7 { get; set; }
+}

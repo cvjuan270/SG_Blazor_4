@@ -1,0 +1,54 @@
+﻿@page "/psico/lsb_50index"
+
+@using SG_Blazor_4.Shared.Models.Psico
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+@inject IJSRuntime iJSRuntime
+
+
+<div class="card">
+    <div class=" card-header">
+        <h5>LSB-50</h5>
+        <div class="form-row">
+            <input class="form-control col-md-2" type="date" @bind="fechas.FecIni" />
+            <input class="form-control col-md-2" type="date" @bind="fechas.FecFin" />
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive-sm">
+            <table class="table table-striped">
+                <thead>
+                    <tr><th>Dni</th><th>Nombre</th></tr>
+                </thead>
+                <tbody>
+                    <ListadoGenerico Listado="LSB_50s">
+                        <HayRegistros  Context="lsb_50">
+                            <Lsb_50Row lsb_50="lsb_50"></Lsb_50Row>
+                        </HayRegistros>
+                    </ListadoGenerico>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    Fechas fechas = new Fechas();
+    List<LSB_50Model> LSB_50s = new List<LSB_50Model>();
+    LSB_50Model lSB_50 = new LSB_50Model();
+
+    protected override async Task OnInitializedAsync()
+    {
+        LSB_50s = await httpClient.GetFromJsonAsync<List<LSB_50Model>>("api/lsb_50");
+    }
+
+    public class Fechas
+    {
+        public DateTime FecIni { get; set; }
+        public DateTime FecFin { get; set; }
+
+        public Fechas() { FecIni = DateTime.Now.Date; FecFin = FecIni; }
+    }
+}

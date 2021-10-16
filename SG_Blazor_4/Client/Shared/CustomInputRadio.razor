@@ -1,0 +1,15 @@
+﻿
+
+@foreach (var item in lst)
+{
+    <label class="btn btn-outline-success ml-2 mr-2">
+        <InputRadio Value="item" /> <span class="text-xl-center"> @item</span>
+    </label>
+}
+
+
+
+@code{
+
+    List<int> lst = new List<int> { 0, 1, 2, 3 };
+}

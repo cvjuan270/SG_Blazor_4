@@ -27,7 +27,8 @@ namespace SG_Blazor_4.Server.Datos
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-        public virtual DbSet<Ba7Model> Ba7Models { get; set; }
+        public  DbSet<Ba7Model> Ba7Models { get; set; }
+        public DbSet<LSB_50Model> LSB_50Model { get; set; }
     }
     
 }

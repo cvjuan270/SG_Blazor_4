@@ -1,0 +1,21 @@
+﻿@using SG_Blazor_4.Shared.Models.Psico
+<tr>
+
+    <td>@lsb_50.Dni</td>
+    <td>@lsb_50.NomApe</td>
+    <td>@lsb_50.Edad</td>
+    <td>@lsb_50.Total()</td>
+    <td>@lsb_50.PdGlobal()</td>
+    <td>@lsb_50.Pc()</td>
+    <td>@lsb_50.NumCer()</td>
+    <td>@lsb_50.PdNum()</td>
+    <td>@lsb_50.Pc1()</td>
+    <td>@lsb_50.PdInt()</td>
+    <td>@lsb_50.Pc2()</td>
+    <td>@lsb_50.IndiceGlobal()</td>
+    <td>@lsb_50.NumSintimas()</td>
+    <td>@lsb_50.IntensidadSintomas() </td>
+</tr>
+@code {
+    [Parameter] public LSB_50Model lsb_50 { get; set; }
+}
