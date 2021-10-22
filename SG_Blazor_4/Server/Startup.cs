@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SG_Blazor_4.Server.Datos;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace SG_Blazor_4.Server
 {
@@ -28,6 +29,8 @@ namespace SG_Blazor_4.Server
             services.AddRazorPages();
 
             services.AddDbContext<SG_Blazor_4Context>(options => options.UseSqlServer(Configuration.GetConnectionString("SG_Blazor_4Connection")));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SG_Blazor_4.Server.Datos;
 
 namespace SG_Blazor_4.Server.Migrations
 {
     [DbContext(typeof(SG_Blazor_4Context))]
-    partial class SG_Blazor_4ContextModelSnapshot : ModelSnapshot
+    [Migration("20211021220033_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,39 +22,19 @@ namespace SG_Blazor_4.Server.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("SG_Blazor_4.Shared.Models.OrdenAtencion", b =>
+            modelBuilder.Entity("PerPsicoPruebaPsico", b =>
                 {
-                    b.Property<int>("IdOrdenAtencion")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Dni")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.Property<int?>("Edad")
-                        .IsRequired()
+                    b.Property<int>("PruebasPsicoIdPruebaPsico")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("Fecha")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("GradoInstruccion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NomApe")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Perfil")
+                    b.Property<int>("perPsicosIdPerPsico")
                         .HasColumnType("int");
 
-                    b.HasKey("IdOrdenAtencion");
+                    b.HasKey("PruebasPsicoIdPruebaPsico", "perPsicosIdPerPsico");
 
-                    b.ToTable("ordenAtencions");
+                    b.HasIndex("perPsicosIdPerPsico");
+
+                    b.ToTable("PerPsicoPruebaPsico");
                 });
 
             modelBuilder.Entity("SG_Blazor_4.Shared.Models.Psico.Ba7Model", b =>
@@ -77,9 +59,6 @@ namespace SG_Blazor_4.Server.Migrations
 
                     b.Property<string>("GradoInstruccion")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IdOrdenAtencion")
-                        .HasColumnType("int");
 
                     b.Property<string>("NomApe")
                         .IsRequired()
@@ -407,8 +386,6 @@ namespace SG_Blazor_4.Server.Migrations
 
                     b.HasKey("IdBa7");
 
-                    b.HasIndex("IdOrdenAtencion");
-
                     b.ToTable("Ba7Models");
                 });
 
@@ -644,15 +621,81 @@ namespace SG_Blazor_4.Server.Migrations
                     b.ToTable("LSB_50Model");
                 });
 
-            modelBuilder.Entity("SG_Blazor_4.Shared.Models.Psico.Ba7Model", b =>
+            modelBuilder.Entity("SG_Blazor_4.Shared.Models.Psico.PerPsico", b =>
                 {
-                    b.HasOne("SG_Blazor_4.Shared.Models.OrdenAtencion", "ordenAtencion")
+                    b.Property<int>("IdPerPsico")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdPerPsico");
+
+                    b.ToTable("perPsicos");
+                });
+
+            modelBuilder.Entity("SG_Blazor_4.Shared.Models.Psico.PruebaPsico", b =>
+                {
+                    b.Property<int>("IdPruebaPsico")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdPruebaPsico");
+
+                    b.ToTable("pruebaPsicos");
+
+                    b.HasData(
+                        new
+                        {
+                            IdPruebaPsico = 1,
+                            Nombre = "DISC"
+                        },
+                        new
+                        {
+                            IdPruebaPsico = 2,
+                            Nombre = "Test de Lucher"
+                        },
+                        new
+                        {
+                            IdPruebaPsico = 3,
+                            Nombre = "IG2 - Tony 2"
+                        },
+                        new
+                        {
+                            IdPruebaPsico = 4,
+                            Nombre = "Cuestionario de persepción del riesgo"
+                        },
+                        new
+                        {
+                            IdPruebaPsico = 5,
+                            Nombre = "BA7-A (Atención y consentración)"
+                        },
+                        new
+                        {
+                            IdPruebaPsico = 6,
+                            Nombre = "LSB-50 (Minimult)"
+                        });
+                });
+
+            modelBuilder.Entity("PerPsicoPruebaPsico", b =>
+                {
+                    b.HasOne("SG_Blazor_4.Shared.Models.Psico.PruebaPsico", null)
                         .WithMany()
-                        .HasForeignKey("IdOrdenAtencion")
+                        .HasForeignKey("PruebasPsicoIdPruebaPsico")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ordenAtencion");
+                    b.HasOne("SG_Blazor_4.Shared.Models.Psico.PerPsico", null)
+                        .WithMany()
+                        .HasForeignKey("perPsicosIdPerPsico")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

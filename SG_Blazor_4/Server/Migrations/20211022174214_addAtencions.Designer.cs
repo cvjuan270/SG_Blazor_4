@@ -10,8 +10,8 @@ using SG_Blazor_4.Server.Datos;
 namespace SG_Blazor_4.Server.Migrations
 {
     [DbContext(typeof(SG_Blazor_4Context))]
-    [Migration("20211016143345_unamasssss")]
-    partial class unamasssss
+    [Migration("20211022174214_addAtencions")]
+    partial class addAtencions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,68 @@ namespace SG_Blazor_4.Server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("SG_Blazor_4.Shared.Models.AtencionModel", b =>
+                {
+                    b.Property<int>("IdAtenciones")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Area")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("DocIde")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Empres")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("FecAte")
+                        .HasColumnType("date");
+
+                    b.Property<TimeSpan?>("Hora")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Local0")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("NomApe")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PeReAd")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Perfil")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Proyec")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PueTra")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SubCon")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TipExa")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("IdAtenciones");
+
+                    b.ToTable("atencions");
+                });
 
             modelBuilder.Entity("SG_Blazor_4.Shared.Models.Psico.Ba7Model", b =>
                 {

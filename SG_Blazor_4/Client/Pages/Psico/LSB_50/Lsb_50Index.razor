@@ -10,9 +10,12 @@
 <div class="card">
     <div class=" card-header">
         <h5>LSB-50</h5>
-        <div class="form-row">
+        <div class="form-row col-md-12">
             <input class="form-control col-md-2" type="date" @bind="fechas.FecIni" />
             <input class="form-control col-md-2" type="date" @bind="fechas.FecFin" />
+            <div class="justify-content-end" style="background-color:red">
+                <button class="btn btn-primary">Nuevo</button>
+            </div>
         </div>
     </div>
     <div class="card-body">

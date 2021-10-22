@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,11 @@ namespace SG_Blazor_4.Shared.Models.Psico
     {
         [Key]
         public int IdBa7 { get; set; }
+
+        public int IdOrdenAtencion { get; set; }
+
+        [ForeignKey("IdOrdenAtencion")]
+        public OrdenAtencion ordenAtencion { get; set; }
 
         #region valores
 

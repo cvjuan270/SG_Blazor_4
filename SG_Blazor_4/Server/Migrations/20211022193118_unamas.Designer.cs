@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SG_Blazor_4.Server.Datos;
 
 namespace SG_Blazor_4.Server.Migrations
 {
     [DbContext(typeof(SG_Blazor_4Context))]
-    partial class SG_Blazor_4ContextModelSnapshot : ModelSnapshot
+    [Migration("20211022193118_unamas")]
+    partial class unamas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

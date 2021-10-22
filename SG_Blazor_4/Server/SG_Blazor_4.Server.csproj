@@ -13,11 +13,18 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Stripe.net" Version="39.73.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Client\SG_Blazor_4.Client.csproj" />
     <ProjectReference Include="..\Shared\SG_Blazor_4.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Reportes">
+      <HintPath>..\..\Reportes\bin\Debug\Reportes.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 

@@ -1,0 +1,17 @@
+﻿@using SG_Blazor_4.Shared.Models
+@using SG_Blazor_4.Shared.Models.Psico
+
+<tr>
+    <td>@orden.Dni</td>
+    <td>@orden.NomApe</td>
+    <td>@orden.Edad</td>
+    <td>@orden.GradoInstruccion</td>
+    <td>@perfiles.Where(c=>c.IdPerPsico==orden.Perfil).FirstOrDefault().Nombre</td>
+</tr>
+
+@code{
+
+    [Parameter] public OrdenAtencion orden { get; set; }
+    List<PerPsico> perfiles = Perfiles.GetPerfiles();
+
+}

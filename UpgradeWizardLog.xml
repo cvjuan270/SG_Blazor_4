@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="_UpgradeWizard_Files\UpgradeWizardLog.xslt"?>
+<log>
+  <event>Get project references.</event>
+  <event action="Analyze" type="Success" name="Assembly References" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Server\SG_Blazor_4.Server.csproj" />
+  <event action="Analyze" type="Success" name="Register Directives" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Server\Pages\Error.cshtml" />
+  <event action="Analyze" type="Success" name="Assembly Directives" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Server\Pages\Error.cshtml" />
+  <event action="Analyze" type="Success" name="Error.cshtml" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Server\Pages\Error.cshtml" />
+  <event action="Analyze" type="Success" name="SG_Blazor_4.Server" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Server\SG_Blazor_4.Server.csproj" />
+  <event>Get project references.</event>
+  <event action="Analyze" type="Success" name="Assembly References" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Client\SG_Blazor_4.Client.csproj" />
+  <event action="Analyze" type="Success" />
+  <event action="Analyze" type="Success" />
+  <event action="Analyze" type="Success" />
+  <event action="Analyze" type="Success" />
+  <event action="Analyze" type="Success" name="Register Directives" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Client\wwwroot\index.html" />
+  <event action="Analyze" type="Success" name="Assembly Directives" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Client\wwwroot\index.html" />
+  <event action="Analyze" type="Success" name="index.html" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Client\wwwroot\index.html" />
+  <event action="Analyze" type="Success" />
+  <event action="Analyze" type="Success" />
+  <event action="Analyze" type="Success" name="SG_Blazor_4.Client" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Client\SG_Blazor_4.Client.csproj" />
+  <event>Get project references.</event>
+  <event action="Analyze" type="Success" name="Assembly References" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Shared\SG_Blazor_4.Shared.csproj" />
+  <event action="Analyze" type="Success" name="SG_Blazor_4.Shared" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4\Shared\SG_Blazor_4.Shared.csproj" />
+  <event>Get project references.</event>
+  <event action="Analyze" type="Success" name="Assembly References" path="C:\Users\JUAN\source\repos\SG_Blazor_4\Reports\Reports.csproj" />
+  <event action="Analyze" type="Success" name="Reports" path="C:\Users\JUAN\source\repos\SG_Blazor_4\Reports\Reports.csproj" />
+  <event action="Analyze" type="Success" name="SG_Blazor_4" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4.sln" />
+  <event action="Upgrade" type="Success" name="Assembly References" path="C:\Users\JUAN\source\repos\SG_Blazor_4\Reports\Reports.csproj" />
+  <event action="Upgrade" type="Success" name="Reports" path="C:\Users\JUAN\source\repos\SG_Blazor_4\Reports\Reports.csproj" />
+  <event action="Upgrade" type="Success" name="SG_Blazor_4" path="C:\Users\JUAN\source\repos\SG_Blazor_4\SG_Blazor_4.sln" />
+</log>
