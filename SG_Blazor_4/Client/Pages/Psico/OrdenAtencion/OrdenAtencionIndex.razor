@@ -1,15 +1,16 @@
-﻿@page   "/page/ordenatencionindex"
+﻿@page   "/page/ordenatencion"
 
 @using SG_Blazor_4.Shared.Models
+@using SG_Blazor_4.Shared.Models.Psico
 
 @inject HttpClient httpClient
+@inject IJSRuntime iJSRuntime
 
 <div class="card">
     <div class=" card-header">
         <h5>Ordenes de atencion</h5>
         <div class="form-row d-flex">
-            @*<input class="form-control col-md-2" type="date" @bind="fechas.FecIni" />
-                <input class="form-control col-md-2" type="date" @bind="fechas.FecFin" />*@
+
             <div class="ml-auto p-2">
                 <button type="button" class="btn btn-primary" @onclick="(()=>Create())">
                     <span class="oi oi-plus"></span>
@@ -19,17 +20,46 @@
     </div>
     <div class="card-body">
         <div class="table-responsive-sm">
-            <table class="table table-striped">
-                <tbody>
-                    <ListadoGenerico Listado="ordenAtencions">
 
-                        <HayRegistros Context="Orden">
-                            <OrdenAtencionRow orden="Orden" />
-                        </HayRegistros>
 
-                    </ListadoGenerico>
-                </tbody>
-            </table>
+            @if (ordenAtencions == null)
+            {
+                <img class="d-flex" src="Resources/loading-23.gif" style="height:480px" />
+            }
+            else if (ordenAtencions.Count == 0)
+            {
+                <text>No hay registros para mostrar</text>
+            }
+            else
+            { <table class="table table-striped">
+                    <tbody>
+                        @foreach (var item in ordenAtencions)
+                        {
+                            <tr>
+                                <td>
+                                    <a class="px-2" @onclick="()=>Edit(item)">
+                                        <span class="oi oi-pencil" />
+                                    </a>
+                                    
+                                    <a class="px-2" @onclick="()=>Delete(item)">
+                                        <span class="oi oi-trash" />
+                                    </a>
+                                     <a class="px-2" @onclick="()=>ShowReports(item)">
+                                        <span class="oi oi-file" />
+                                    </a>
+                                </td>
+                                <td>@item.Fecha</td>
+                                <td>@item.Dni</td>
+                                <td>@item.NomApe</td>
+                                <td>@item.Edad</td>
+                                <td>@item.GradoInstruccion</td>
+                                <td>@perfiles.Where(c => c.IdPerPsico == item.Perfil).FirstOrDefault().Nombre</td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         </div>
     </div>
 </div>
@@ -37,28 +67,116 @@
 <!--Modal Create-->
 @if (ShowCreate)
 {
-    <OrdenAtencionCreate />
+    <OrdenAtencionEdit modo="@modo" ordenAtencion="@ordenAtencion" OnConfirm="@OnConfirm" OnCancel="@OnCancel" />
 }
 <!--Modal Create-->
+@if (ShowReportsComp)
+{
+    <PruebasCompletadas ordenAtencion="@ordenAtencion" OnCancel="@OnCancelReport"/>
+}
+
 
 @code {
-
+    List<PerPsico> perfiles = Perfiles.GetPerfiles();
     bool ShowCreate;
-    List<OrdenAtencion> ordenAtencions;
+    bool ShowReportsComp;
+    string modo;
+    OrdenAtencionModel ordenAtencion = new OrdenAtencionModel();
+    List<OrdenAtencionModel> ordenAtencions;
 
     private async Task GetDatos()
     {
-        ordenAtencions = await httpClient.GetFromJsonAsync<List<OrdenAtencion>>("api/ordenatencion");
+        ordenAtencions = await httpClient.GetFromJsonAsync<List<OrdenAtencionModel>>("api/ordenatencion");
     }
 
-    private void Create() 
+    #region CRUD
+    #region vista
+    private void Create()
     {
+        modo = "C";
         ShowCreate = true;
-        Console.WriteLine("Show from Create");
+    }
+    private void Edit(OrdenAtencionModel orden)
+    {
+        ordenAtencion = orden;
+        modo = "A";
+        ShowCreate = true;
+
+    }
+    private void Delete(OrdenAtencionModel orden)
+    {
+        ordenAtencion = orden;
+        modo = "D";
+        ShowCreate = true;
+    }
+    #endregion
+    #endregion
+
+    void ShowReports( OrdenAtencionModel _ordenAtencion)
+    {
+        ordenAtencion = _ordenAtencion;
+        ShowReportsComp = true;
+    }
+    void OnCancelReport()
+    {
+        ordenAtencion = new OrdenAtencionModel();
+        ShowReportsComp = false;
     }
 
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine("OnInitializedAsync");
         await GetDatos();
+    }
+    protected override bool ShouldRender()
+    {
+        Console.WriteLine("ShouldRender");
+        return true;
+    }
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("OnParametersSet");
+    }
+    private async Task OnConfirm()
+    {
+        switch (modo)
+        {
+            case "C":
+                try
+                {
+                    await httpClient.PostAsJsonAsync<OrdenAtencionModel>("api/ordenatencion", ordenAtencion);
+                    await GetDatos();
+                }
+                catch (Exception ex)
+                {
+                    await iJSRuntime.InvokeVoidAsync("alert", ex.Message);
+                }
+                break;
+            case "A":
+                try
+                {
+                    await httpClient.PutAsJsonAsync<OrdenAtencionModel>($"api/ordenatencion/{ordenAtencion.IdOrdenAtencion}", ordenAtencion);
+                    await GetDatos();
+                }
+                catch (Exception ex)
+                {
+                    await iJSRuntime.InvokeVoidAsync("alert", ex.Message);
+                }
+                break;
+            case "D":
+                await httpClient.DeleteAsync($"api/ordenatencion/{ordenAtencion.IdOrdenAtencion}");
+                await GetDatos();
+                break;
+        }
+
+        modo = null;
+        ordenAtencion = new OrdenAtencionModel();
+        ShowCreate = false;
+    }
+    void OnCancel()
+    {
+        modo = null;
+        ordenAtencion = new OrdenAtencionModel();
+        ShowCreate = false;
     }
 }

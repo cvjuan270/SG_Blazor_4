@@ -1,0 +1,143 @@
+﻿@page "/page/psico/bateriapruebasindex/{idOA}"
+@using SG_Blazor_4.Shared.Models
+@using SG_Blazor_4.Shared.Models.Psico
+@using SG_Blazor_4.Client.Pages.Psico.BA7
+@using SG_Blazor_4.Client.Pages.Psico.LSB_50
+@inject HttpClient httpClient
+@inject IJSRuntime iJSRuntime
+
+<div class="card">
+    <div class=" card-header">
+        <h6>@ordenAtencion.Dni | @ordenAtencion.NomApe | @ordenAtencion.GradoInstruccion</h6>
+    </div>
+    <div class="card-body">
+        <div class="container">
+            <div class="card-deck mb-3 text-center">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Ba7</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Lorem ipsum</h5>
+                        <button class="btn btn-lg btn-block @(ba7exist?"btn-outline-secondary":"btn-outline-primary")"
+                                @onclick="@IniciarBa7">Iniciar prueba</button>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">LSB-50</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Hola mundo</h5>
+                        <button class="btn btn-lg btn-block @(lsb_50Exist?"btn-outline-secondary":"btn-outline-primary")"
+                                @onclick="@InicaLsb_50">Iniciar prueba</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ShowBa7)
+{
+    <Ba7Form ordenAtencion="@ordenAtencion" ba7Model="@ba7Model" OnConfirm="OnConfirmBa7" OnCancel="OnCancelBa7"/>
+}
+@if (ShowLSB_50)
+{
+    <Lsb_50Form lSB_50="lSB_50Model" OnConfirm="OnConfirmLsb_50" OnCancel="OnCancelLsb_50" />
+}
+
+@code{
+    bool ShowBa7;
+    bool ShowLSB_50;
+    bool ba7exist;
+    bool lsb_50Exist;
+    [Parameter] public string idOA { get; set; }
+    OrdenAtencionModel ordenAtencion = new OrdenAtencionModel();
+    Ba7Model ba7Model = new Ba7Model();
+    LSB_50Model lSB_50Model = new LSB_50Model();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        /*ba7*/
+        ordenAtencion = await httpClient.GetFromJsonAsync<OrdenAtencionModel>($"api/ordenatencion/{idOA}");
+        var ba7 = await httpClient.GetFromJsonAsync<Ba7Model>($"api/Ba7/searchs/?idoa={idOA}");
+        ba7exist =  ba7.IdBa7 != 0 ? true : false;
+
+        /*LSB_50*/
+        var lsb = await httpClient.GetFromJsonAsync<LSB_50Model>($"api/lsb_50/searchs/?idoa={idOA}");
+        lsb_50Exist = lsb.IdLSB_50 != 0 ? true : false;
+    }
+
+    #region Ba7
+
+    void IniciarBa7()
+    {
+        if (!ba7exist)
+        {
+            ba7Model.Dni = ordenAtencion.Dni;
+            ba7Model.NomApe = ordenAtencion.NomApe;
+            ba7Model.Edad = ordenAtencion.Edad;
+            ba7Model.Fecha = ordenAtencion.Fecha;
+            ba7Model.GradoInstruccion = ordenAtencion.GradoInstruccion;
+            ShowBa7 = true;
+        }
+    }
+
+    async Task OnConfirmBa7()
+    {
+        if (!await iJSRuntime.InvokeAsync<bool>("confirm", $"Una vez guardado, ya no se puede modificar! DESEA GUARDARLA?"))
+            return;
+        ba7Model.IdOrdenAtencion = ordenAtencion.IdOrdenAtencion;
+        await httpClient.PostAsJsonAsync("api/Ba7", ba7Model);
+        ba7Model = new Ba7Model();
+        ShowBa7 = false;
+        ba7exist = true;
+    }
+
+    async Task OnCancelBa7()
+    {
+        if (!await iJSRuntime.InvokeAsync<bool>("confirm", $"Si cierra sin guardar se perderan todos los datos registrados! DESEA CERRAR SIN GUARDAR?"))
+            return;
+        ShowBa7 = false;
+        ba7Model = new Ba7Model();
+    }
+
+    #endregion
+    #region Lsb_50
+
+    void InicaLsb_50()
+    {
+        if (!lsb_50Exist)
+        {
+            lSB_50Model.Dni = ordenAtencion.Dni;
+            lSB_50Model.NomApe = ordenAtencion.NomApe;
+            lSB_50Model.Edad = ordenAtencion.Edad;
+            lSB_50Model.Fecha = ordenAtencion.Fecha;
+            lSB_50Model.GradoInstruccion = ordenAtencion.GradoInstruccion;
+
+            ShowLSB_50 = true;
+        }
+    }
+    async Task OnConfirmLsb_50()
+    {
+        if (!await iJSRuntime.InvokeAsync<bool>("confirm", $"Una vez guardado, ya no se puede modificar! DESEA GUARDARLA?"))
+            return;
+        lSB_50Model.IdOrdenAtencion = ordenAtencion.IdOrdenAtencion;
+        await httpClient.PostAsJsonAsync("api/lsb_50", lSB_50Model);
+        lSB_50Model = new LSB_50Model();
+        ShowLSB_50 = false;
+        lsb_50Exist = true;
+    }
+    async Task OnCancelLsb_50()
+    {
+        if (!await iJSRuntime.InvokeAsync<bool>("confirm", $"Si cierra sin guardar se perderan todos los datos registrados! DESEA CERRAR SIN GUARDAR?"))
+            return;
+        ShowLSB_50 = false;
+        lSB_50Model = new LSB_50Model();
+    }
+
+    #endregion
+}

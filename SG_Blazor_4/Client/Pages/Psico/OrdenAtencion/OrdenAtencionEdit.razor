@@ -1,0 +1,100 @@
+﻿@using SG_Blazor_4.Shared.Models
+@using SG_Blazor_4.Shared.Models.Services
+
+@inject HttpClient httpClient
+@inject IJSRuntime iJSRuntime
+<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                @switch (modo)
+                {
+                    case "C":
+                        <h4 class="modal-title text-primary ">Crear Orden de atención</h4>
+                        break;
+                    case "A":
+                        <h4 class="modal-title  text-warning">Editar Orden de atención de: @ordenAtencion.NomApe</h4>
+                        break;
+                    case "D":
+                        <h4 class="modal-title text-danger">Eliminar Orden de atención @ordenAtencion.NomApe</h4>
+                        break;
+                }
+                <button type="button" class="close" @onclick="@OnCancel">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <EditForm Model="@ordenAtencion" OnValidSubmit="@OnConfirm">
+                    <DataAnnotationsValidator />
+                    <div class="form-group">
+                        <label>Dni</label>
+                        <InputText class="form-control form-control-sm col-sm-4 my-2" @bind-Value="ordenAtencion.Dni" />
+                        <button class="form-control form-control-sm btn btn-outline-warning col-sm-4" @onclick="GetDatosPaciente">
+                            <span class="oi oi-magnifying-glass" />
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre y Apellido</label>
+                        <InputText class="form-control" @bind-Value="ordenAtencion.NomApe"></InputText>
+                    </div>
+                    <div class="form-group">
+                        <label>Edad</label>
+                        <InputNumber class="form-control col-sm-4" @bind-Value="ordenAtencion.Edad"></InputNumber>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <InputDate class="form-control col-sm-4" @bind-Value="ordenAtencion.Fecha"></InputDate>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Grado de instrucción</label>
+                        <InputSelect class="form-control form-control-sm" @bind-Value="ordenAtencion.GradoInstruccion">
+                            <SG_Blazor_4.Client.Shared.Fragments.GradoInstruccion />
+                        </InputSelect>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Perfil</label>
+                        <InputSelect class="form-control form-control-sm" @bind-Value="ordenAtencion.Perfil">
+                            <SG_Blazor_4.Client.Shared.Fragments.PerfilesPsico />
+                        </InputSelect>
+                    </div>
+
+                    <button class="btn btn-outline-primary my-2" type="submit">Aceptar</button>
+                    <button class="btn btn-outline-secondary my-2" type="button" @onclick="OnCancel">Cancelar</button>
+                </EditForm>
+
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter] public string modo { get; set; }
+
+    [Parameter] public OrdenAtencionModel ordenAtencion { get; set; }
+
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    [Parameter] public EventCallback OnConfirm { get; set; }
+
+    private async Task GetDatosPaciente()
+    {
+        try
+        {
+            string url = $"https://dniruc.apisperu.com/api/v1/dni/{ordenAtencion.Dni}?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImN2anVhbjI3MEBnbWFpbC5jb20ifQ.ecwEwfL1dkWJ4_vV6NG76pEyuFZby_-E_gvTivoTynw";
+
+            var response = await httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            var dnires = await response.Content.ReadFromJsonAsync<DniResponse>();
+
+            ordenAtencion.NomApe = dnires.apellidoPaterno + " " + dnires.apellidoMaterno + " " + dnires.nombres;
+        }
+        catch (Exception ex)
+        {
+            await iJSRuntime.InvokeVoidAsync("alert", ex.Message);
+        }
+
+    }
+}

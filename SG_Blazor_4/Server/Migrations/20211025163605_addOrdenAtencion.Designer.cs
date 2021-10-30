@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SG_Blazor_4.Server.Datos;
 
 namespace SG_Blazor_4.Server.Migrations
 {
     [DbContext(typeof(SG_Blazor_4Context))]
-    partial class SG_Blazor_4ContextModelSnapshot : ModelSnapshot
+    [Migration("20211025163605_addOrdenAtencion")]
+    partial class addOrdenAtencion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +43,6 @@ namespace SG_Blazor_4.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("GradoInstruccion")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NomApe")
@@ -436,9 +437,6 @@ namespace SG_Blazor_4.Server.Migrations
                     b.Property<string>("GradoInstruccion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdOrdenAtencion")
-                        .HasColumnType("int");
-
                     b.Property<string>("NomApe")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -645,23 +643,10 @@ namespace SG_Blazor_4.Server.Migrations
 
                     b.HasKey("IdLSB_50");
 
-                    b.HasIndex("IdOrdenAtencion");
-
                     b.ToTable("LSB_50Model");
                 });
 
             modelBuilder.Entity("SG_Blazor_4.Shared.Models.Psico.Ba7Model", b =>
-                {
-                    b.HasOne("SG_Blazor_4.Shared.Models.OrdenAtencionModel", "ordenAtencion")
-                        .WithMany()
-                        .HasForeignKey("IdOrdenAtencion")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ordenAtencion");
-                });
-
-            modelBuilder.Entity("SG_Blazor_4.Shared.Models.Psico.LSB_50Model", b =>
                 {
                     b.HasOne("SG_Blazor_4.Shared.Models.OrdenAtencionModel", "ordenAtencion")
                         .WithMany()

@@ -1,0 +1,52 @@
+﻿@using SG_Blazor_4.Shared.Models.Psico
+@using SG_Blazor_4.Shared.Models
+@inject HttpClient httpClient
+
+<div class="modal fade show " style="display:block;overflow-y:auto;background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title text-primary ">Ba7 Test-A</h2>
+                <button type="button" class="close" @onclick="@OnCancel">&times;</button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>
+                        @if (ba7Model.IdBa7 != 0)
+                        {
+                            <a href="api/ba7report/@ba7Model.IdBa7" target="_blank">
+                                <span class="oi oi-file" />
+                                Ba7 Reporte
+                            </a>
+                        }
+                    </li>
+                    <li>
+                        @if (lSB_50Model.IdLSB_50 != 0)
+                        {
+                            <a href="api/lsb_50report/@lSB_50Model.IdLSB_50" target="_blank">
+                                <span class="oi oi-file" />
+                                LSB-50 Reporte
+                            </a>
+                        }
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@code{
+
+    private Ba7Model ba7Model = new Ba7Model();
+    private LSB_50Model lSB_50Model = new LSB_50Model();
+    [Parameter] public OrdenAtencionModel ordenAtencion { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ba7Model = await httpClient.GetFromJsonAsync<Ba7Model>($"api/ba7/searchs/?idoa={ordenAtencion.IdOrdenAtencion}");
+        lSB_50Model = await httpClient.GetFromJsonAsync<LSB_50Model>($"api/lsb_50/searchs/?idoa={ordenAtencion.IdOrdenAtencion}");
+    }
+
+}

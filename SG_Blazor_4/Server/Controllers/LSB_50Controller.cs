@@ -42,6 +42,19 @@ namespace SG_Blazor_4.Server.Controllers
             return lSB_50Model;
         }
 
+        [Route("searchs"), HttpGet]
+        public async Task<ActionResult<LSB_50Model>> SearchsLSB_50Model(int idoa)
+        {
+            var lsb_50 = await _context.LSB_50Model.Where(c => c.IdOrdenAtencion == idoa).FirstOrDefaultAsync();
+            if (lsb_50==null)
+            {
+                lsb_50 = new LSB_50Model() { IdLSB_50 = 0 };
+                return lsb_50;
+            }
+            return lsb_50;
+        }
+
+
         // PUT: api/LSB_50/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

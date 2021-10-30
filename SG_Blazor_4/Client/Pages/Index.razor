@@ -1,7 +1,62 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@using SG_Blazor_4.Shared.Models
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <!-- Icon -->
+        
+        <div class="fadeIn first">
+            <img src="/Resources/LogoSG3Web.png" id="icon" alt="User Icon" />
+            <h4 class="text-center my-4 text-primary">Sistema de toma de pruebas del area de psicología</h4>
+        </div>
+
+        <!-- Login Form -->
+
+        <form>
+           <input type="date" class="form-control form-control-lg fadeIn mx-auto" style="width:85%" @bind="Date"/>
+            <input type="text" min="0" pattern="^[0-9]+" id="login" class="fadeIn second" name="login" placeholder="DNI" required @bind-value="Dni">
+            <input type="button" class="fadeIn fourth my-2 mx-auto" style="width:85%;height:3.5rem" value="Iniciar sesión" @onclick="OnClic">
+        </form>
+
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+          <label class="underlineHover text-danger">@Alert</label>
+        </div>
+
+    </div>
+</div>
+@code{
+
+    string Dni;
+    string Alert;
+    DateTime Date = DateTime.Now.Date;
+
+    private async Task OnClic()
+    {
+
+        if (!String.IsNullOrEmpty(Dni)&&Dni.Length==8)
+        {
+            var ordenAtencion = await httpClient.GetFromJsonAsync<OrdenAtencionModel>($"api/ordenatencion/searchs/?dni={Dni}&fecha={Date.ToString("yyyy-MM-dd")}");
+            if (ordenAtencion.IdOrdenAtencion!=0)
+            {
+                navigationManager.NavigateTo($"page/psico/bateriapruebasindex/{ordenAtencion.IdOrdenAtencion}");
+
+            }
+            else
+            {
+                Alert = "DNI no registrado";
+            }
+        }
+        else
+        {
+            Alert = "Ingrese DNI Válido";
+        }
+    }
+
+
+}

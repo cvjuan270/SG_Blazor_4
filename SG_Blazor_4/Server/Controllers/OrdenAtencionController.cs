@@ -23,14 +23,14 @@ namespace SG_Blazor_4.Server.Controllers
 
         // GET: api/OrdenAtencion
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrdenAtencion>>> GetordenAtencions()
+        public async Task<ActionResult<IEnumerable<OrdenAtencionModel>>> GetordenAtencions()
         {
             return await _context.ordenAtencions.ToListAsync();
         }
 
         // GET: api/OrdenAtencion/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrdenAtencion>> GetOrdenAtencion(int id)
+        public async Task<ActionResult<OrdenAtencionModel>> GetOrdenAtencion(int id)
         {
             var ordenAtencion = await _context.ordenAtencions.FindAsync(id);
 
@@ -42,10 +42,23 @@ namespace SG_Blazor_4.Server.Controllers
             return ordenAtencion;
         }
 
+        [Route("searchs")]
+        [HttpGet]
+        public async Task<ActionResult<OrdenAtencionModel>> SearchsOrdenAtencion(DateTime fecha, string dni)
+        {
+            OrdenAtencionModel ordate = new OrdenAtencionModel() {IdOrdenAtencion=0 };
+            if (await _context.ordenAtencions.Where(c => c.Dni == dni& c.Fecha==fecha).AnyAsync())
+            {
+                return await _context.ordenAtencions.Where(c => c.Dni == dni &c.Fecha==fecha).FirstOrDefaultAsync();
+            }
+
+            return ordate;
+        }
+
         // PUT: api/OrdenAtencion/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrdenAtencion(int id, OrdenAtencion ordenAtencion)
+        public async Task<IActionResult> PutOrdenAtencion(int id, OrdenAtencionModel ordenAtencion)
         {
             if (id != ordenAtencion.IdOrdenAtencion)
             {
@@ -76,7 +89,7 @@ namespace SG_Blazor_4.Server.Controllers
         // POST: api/OrdenAtencion
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrdenAtencion>> PostOrdenAtencion(OrdenAtencion ordenAtencion)
+        public async Task<ActionResult<OrdenAtencionModel>> PostOrdenAtencion(OrdenAtencionModel ordenAtencion)
         {
             _context.ordenAtencions.Add(ordenAtencion);
             await _context.SaveChangesAsync();

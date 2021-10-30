@@ -16,7 +16,7 @@ namespace SG_Blazor_4.Shared.Models.Psico
         public int IdOrdenAtencion { get; set; }
 
         [ForeignKey("IdOrdenAtencion")]
-        public OrdenAtencion ordenAtencion { get; set; }
+        public OrdenAtencionModel ordenAtencion { get; set; }
 
         #region valores
 

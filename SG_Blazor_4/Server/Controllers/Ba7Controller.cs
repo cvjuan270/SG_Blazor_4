@@ -42,6 +42,17 @@ namespace SG_Blazor_4.Server.Controllers
             return ba7Model;
         }
 
+        [Route("searchs")]
+        public async Task<ActionResult<Ba7Model>> SearchsBa7Model(int idoa)
+        {
+            var ba7Model = await _context.Ba7Models.Where(c => c.IdOrdenAtencion == idoa).FirstOrDefaultAsync();
+            if (ba7Model == null)
+            {
+                return ba7Model = new Ba7Model() { IdBa7 = 0 };
+            }
+            return ba7Model;
+        }
+
         // PUT: api/Ba7/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

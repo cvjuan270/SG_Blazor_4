@@ -1,0 +1,11 @@
+﻿@using SG_Blazor_4.Shared.Models.Psico
+<option value="" selected disabled>(Seleccione...)</option>
+@foreach (var item in lstPerPsico)
+{
+    <option value="@item.IdPerPsico">@item.Nombre</option>
+}
+
+@code{
+    List<PerPsico> lstPerPsico = Perfiles.GetPerfiles();
+
+}
